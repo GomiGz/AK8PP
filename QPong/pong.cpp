@@ -8,8 +8,12 @@ Pong::Pong(QWidget *parent)
     ui->setupUi(this);
 
     ball = BallPtr(new Ball(this));
+    userPaddle = PaddlePtr(new Paddle(this,ball,false));
+    aiPaddle = PaddlePtr(new Paddle(this,ball,true));
 
     connect(this, &Pong::draw, ball.get(), &Ball::draw);
+    connect(this, &Pong::draw, userPaddle.get(), &Paddle::draw);
+    connect(this, &Pong::draw, aiPaddle.get(), &Paddle::draw);
 
 }
 

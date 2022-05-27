@@ -7,8 +7,7 @@ Ball::Ball(QWidget *p)
     QRect rct = parent->rect();
     x = rct.width()/2;
     y = rct.height()/2;
-    vx = rand() % 10;
-    vy = rand() % 10;
+    vx = 5;
 
     start(10);
 }

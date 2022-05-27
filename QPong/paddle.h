@@ -1,32 +1,29 @@
 #ifndef PADDLE_H
 #define PADDLE_H
 
-#include <QGraphicsRectItem>
-#include <qobject.h>
+#include <QObject>
+#include <QTimer>
+#include <QWidget>
+#include <QPainter>
+#include "ball.h"
 
-
-
-class Paddle : public QObject, public QGraphicsRectItem
+class Paddle: public QTimer
 {
     Q_OBJECT
 public:
-    Paddle();
-    void keyReleaseEvent(QKeyEvent *event);
-    enum MoveType {UP, DOWN};
-    Q_ENUM(MoveType)
-    bool validMove(MoveType moveType);
-    void move(MoveType moveType);
-    void randomMove(qreal ballY);
-    int height();
-    int width();
-
-protected:
-    int m_height = 100;
-    int m_width = 20;
-    int m_moveStep = 15;
+    Paddle(QWidget *p,BallPtr b,bool aiPaddle);
 
 public slots:
     void draw(QPainter &painter);
+
+protected:
+    QWidget *parent = NULL;
+    QRect *rect;
+    bool aiPaddle;
+    BallPtr ball;
+
+    virtual void timerEvent(QTimerEvent *);
 };
+typedef std::shared_ptr<Paddle> PaddlePtr;
 
 #endif // PADDLE_H

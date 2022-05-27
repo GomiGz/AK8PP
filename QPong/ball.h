@@ -12,14 +12,14 @@ class Ball : public QTimer
 
 public:
     Ball(QWidget *p);
+    int x = 0;
+    int y = 0;
 
 public slots:
     void draw(QPainter &painter);
 
 protected:
     QWidget *parent = NULL;
-    int x = 0;
-    int y = 0;
     float vx = 1;
     float vy = 1;
 

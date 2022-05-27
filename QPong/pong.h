@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "ball.h"
+#include "paddle.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Pong; }
@@ -23,6 +24,9 @@ signals:
 private:
     Ui::Pong *ui;
     BallPtr ball;
+    PaddlePtr userPaddle;
+    PaddlePtr aiPaddle;
+
 
 protected:
     virtual void paintEvent(QPaintEvent *);
