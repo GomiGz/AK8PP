@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QWidget>
 #include <QPainter>
+#include <QGraphicsItem>
 
 class Ball : public QTimer
 {
@@ -12,11 +13,14 @@ class Ball : public QTimer
 
 public:
     Ball(QWidget *p);
-    int x = 0;
-    int y = 0;
+    float x = 0;
+    float y = 0;
+    bool turn = false;
+    void Reset();
 
 public slots:
     void draw(QPainter &painter);
+    void hit();
 
 protected:
     QWidget *parent = NULL;

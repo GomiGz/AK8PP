@@ -28,21 +28,40 @@ void Paddle::timerEvent(QTimerEvent *)
 {
     QRect par = parent->rect();
 
+    float decideValue;
     if(aiPaddle){
-        if(ball->y <= (rect->y() + rect->height()/2))
-        {
-            rect->setY((rect->y() - 1 < 0) ? 0 : rect->y() - 1);
-        }else{
-            rect->setY((rect->y() + 1 > par.height()) ? par.height() : rect->y() + 1);
-        }
+        decideValue = ball->y;
     }else{
         QPoint p = parent->mapFromGlobal(QCursor::pos());
-        if(p.y() > rect->y()){
-            rect->setY(rect->y() + 1);
-        }else{
-            rect->setY(rect->y() - 1);
+        decideValue = p.y();
+    }
+    float position = rect->y() + rect->height()/2;
+
+    if(decideValue > position){
+        rect->moveTop((rect->y() + rect->height() + 1 > par.height()) ? par.height() - rect->height() : rect->y() + 1);
+    }else if (decideValue < position){
+        rect->moveTop((rect->y() - 1 < 0) ? 0 : rect->y() - 1);
+    }
+
+    if(aiPaddle){
+        if(ball->x >= rect->left()){
+            //qDebug()<<"Ball Y :"<< ball->y << ", Paddle top: "<<rect->top() << ", Paddle bottom: " << rect->bottom();
+            if(ball->y >= rect->top() && ball->y <= rect->bottom()){
+                qDebug() << "Parry";
+                emit Parry();
+            }else{
+                qDebug() << "Score";
+                emit Score(false);
+            }
+        }
+    }else{
+        if(ball->x <= rect->right()){
+            if(ball->y >= rect->top() && ball->y <= rect->bottom()){
+                emit Parry();
+            }else{
+                emit Score(true);
+            }
         }
     }
-    rect->setHeight(80);
     parent->update();
 }

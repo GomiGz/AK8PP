@@ -16,6 +16,10 @@ public:
 public slots:
     void draw(QPainter &painter);
 
+signals:
+    void Parry();
+    void Score(bool AI);
+
 protected:
     QWidget *parent = NULL;
     QRect *rect;
